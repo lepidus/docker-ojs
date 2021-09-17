@@ -9,6 +9,7 @@ version: "3.6"
 networks:
   inside:
     external: false
+    internal: true
 
 services:
   db:
