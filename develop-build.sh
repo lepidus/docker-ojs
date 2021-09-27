@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # ===============================================================================
-#          FILE:  build-dev.sh
+#          FILE:  develop-build.sh
 #
-#         USAGE:  build [<ojs>]
+#         USAGE:  develop-build [<ojs>]
 #
 #   DESCRIPTION:  A script to generate the folder structure and required
 #                 files to run a full ojs stack.
