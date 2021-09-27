@@ -1,0 +1,36 @@
+# Set your journal Tag:
+COMPOSE_PROJECT_NAME=ojs-development
+PROJECT_DOMAIN=journal.localhost
+SERVERNAME=$PROJECT_DOMAIN
+
+# Warning: Dockerfile is not taking this variable yet.
+# OJS_BRANCH=ojs-stable-3_1_2-0
+
+# IMPORTANT: Set a non used port.
+HTTP_PORT=8081
+HTTPS_PORT=8481
+
+# Remember this to fill your installation form in a clean installation
+# MYSQL_VERSION=10.3
+MYSQL_ROOT_PASSWORD=root
+MYSQL_USER=ojs
+MYSQL_PASSWORD=ojs
+MYSQL_DATABASE=ojs
+# External port to mysql/mariadb container
+MYSQL_PORT=5555
+
+# Mailhog smtp configuration ports
+SMTP_MAILHOG_PORT=1025
+SMTP_MAILHOG_HTTP_PORT=8025
+
+# OJS variables
+OJS_CLI_INSTALL=0
+OJS_DB_HOST=db
+OJS_DB_DRIVER=mysqli
+OJS_DB_USER=ojs
+OJS_DB_PASSWORD=ojs
+OJS_DB_NAME=ojs
+
+# Container restart policy
+# Defaults to unless-stopped
+RESTART_POLICY=unless-stopped
