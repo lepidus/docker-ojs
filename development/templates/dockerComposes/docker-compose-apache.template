@@ -10,6 +10,9 @@ networks:
   dev-net:
     external: false
 
+volumes:
+  plugins:
+
 services:
   db:
     image: mariadb:10.2
@@ -56,6 +59,7 @@ services:
       - ./volumes/private:/var/www/files
       - ./volumes/public:/var/www/html/public
       - ./volumes/logs/app:/var/log/apache2
+      - plugins:/var/www/html/plugins/
 #      - ./volumes/ojs:/var/www/html
 #      # WARNING: You can only enable file-volumes if file exists in the container.
 #      - ./volumes/config/ojs.config.inc.php:/var/www/html/config.inc.php

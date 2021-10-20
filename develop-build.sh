@@ -274,11 +274,12 @@ for ojs in "${ojsVersions[@]}"; do
 							"development/versions/$ojsNum/$os/$server/$php/docker-compose-local.yml"
 
 						# Setting a link with a non versioned folder with the last avaliable php version
-	                                        if [[ -d "development/versions/$ojsNum/$os/$server/php" ]]; then
+	                    if [[ -d "development/versions/$ojsNum/$os/$server/php" ]]; then
 							unlink "development/versions/$ojsNum/$os/$server/php"
 						fi
 						ln -s "$php" "development/versions/$ojsNum/$os/$server/php"
-
+						
+						ln -s "/var/lib/docker/volumes/ojs-development_plugins/_data" "development/versions/$ojsNum/$os/$server/php/volumes/plugins"
 						printf "BUILT:    $ojsNum: [$server] $php (over $os)\n"
 					else
 						printf "\nERROR when building $ojs: [$server] $php (over $os)\n"
@@ -293,3 +294,5 @@ for ojs in "${ojsVersions[@]}"; do
 		printf "\n"
 	done
 done
+
+chmod 777 -R development/versions;
