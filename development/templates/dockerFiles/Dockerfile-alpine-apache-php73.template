@@ -96,9 +96,6 @@ RUN set -xe \
 	&& git submodule update --init --recursive >/dev/null \
 	# Composer vudu:
  	&& curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer.phar \
-	# To avoid timeouts with gitHub we use tokens:
-	# TODO: Replace personal token by an official one.
- 	# && composer.phar config -g github-oauth.github.com 58778f1c172c09f3add6cb559cbadd55de967d47 \
 	# Install Composer Deps:
  	&& composer.phar --working-dir=lib/pkp install --no-dev \
  	&& composer.phar --working-dir=plugins/paymethod/paypal install --no-dev \

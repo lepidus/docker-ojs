@@ -39,8 +39,6 @@ ENV PACKAGES 		\
 	runit 			\
 	supervisor
 
-#	php5-fpm 		\
-
 # PHP extensions
 ENV PHP_EXTENSIONS	\
 	php5-bcmath		\
