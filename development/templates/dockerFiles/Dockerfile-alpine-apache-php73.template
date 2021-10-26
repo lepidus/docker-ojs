@@ -100,9 +100,9 @@ RUN set -xe \
 	# TODO: Replace personal token by an official one.
  	# && composer.phar config -g github-oauth.github.com 58778f1c172c09f3add6cb559cbadd55de967d47 \
 	# Install Composer Deps:
- 	&& composer.phar --working-dir=lib/pkp install --no-dev \
- 	&& composer.phar --working-dir=plugins/paymethod/paypal install --no-dev \
-	&& composer.phar --working-dir=plugins/generic/citationStyleLanguage install --no-dev \
+ 	&& composer.phar --working-dir=lib/pkp install \
+ 	&& composer.phar --working-dir=plugins/paymethod/paypal install \
+	&& composer.phar --working-dir=plugins/generic/citationStyleLanguage install \
 	# Node joins to the party:
 	&& npm install -y && npm run build \
 # Create directories
@@ -123,18 +123,13 @@ RUN set -xe \
 # Added configuration of smtp server mailhog (/var/www/html/config.inc.php)
 	&& sed -i 's/\; smtp = On/smtp = On/g' /var/www/html/config.inc.php \
     && sed -i 's/\; smtp_server = mail.example.com/smtp_server = mailhog/g' /var/www/html/config.inc.php \
-    && sed -i 's/\; smtp_port = 25/smtp_port = 1025/g' /var/www/html/config.inc.php \
+    && sed -i 's/\; smtp_port = 25/smtp_port = 1025/g' /var/www/html/config.inc.php \	
 # Clear the image (list of files to be deleted in exclude.list).
 	&& cd /var/www/html \
  	&& rm -rf $(cat /tmp/exclude.list) \
 	&& apk del --no-cache .build-deps \
 	&& rm -rf /tmp/* \
-	&& rm -rf /root/.cache/* \
-# Some folders are not required (as .git .travis.yml test .gitignore .gitmodules ...)
-	&& find . -name ".git" -exec rm -Rf '{}' \; \
-	&& find . -name ".travis.yml" -exec rm -Rf '{}' \; \
-	&& find . -name "test" -exec rm -Rf '{}' \; \
-	&& find . \( -name .gitignore -o -name .gitmodules -o -name .keepme \) -exec rm -Rf '{}' \;
+	&& rm -rf /root/.cache/* ;
 
 COPY root/ /
 
