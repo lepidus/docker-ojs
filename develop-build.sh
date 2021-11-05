@@ -18,8 +18,8 @@
 #  ORGANIZATION:  Public Knowledge Project (PKP), Lepidus
 #       LICENSE:  GPL 3
 #       CREATED:  04/02/2020 23:50:15 CEST
-#       UPDATED:  22/09/2021 15:22:30 CEST
-#      REVISION:  1.4
+#       UPDATED:  21/10/2021 15:22:30 CEST
+#      REVISION:  1.5
 #===============================================================================
 
 set -Eeuo pipefail
@@ -59,11 +59,11 @@ osVersions=( 'alpine' )
 
 # All the Webservers:
 webServers=(  'apache' )
-# webServers=(  'apache' 'nginx' )
+
 
 # All PHP versions:
 phpVersions=( 'php5' 'php7' 'php73' )
-# phpVersions=( 'php5' 'php7' 'php73' )
+
 
 # PHP support for each ojs version:
 php5=(  'ojs-2_0_0-0' \
