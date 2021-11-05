@@ -170,7 +170,7 @@ printf "\n\nBUILDING OJS OFFICIAL DOCKER STACKS\n"
 printf "===================================\n\n"
 
 # Remove EVERY existing stack: Start from clean.
-rm -Rf development/versions/*
+sudo rm -Rf development/versions/*
 
 for ojs in "${ojsVersions[@]}"; do
 	for os in "${osVersions[@]}"; do
@@ -239,7 +239,7 @@ for ojs in "${ojsVersions[@]}"; do
 							  (uncomment the volume docker-compose.yml)" \
 							  > "development/versions/$ojsNum/$os/$server/$php/volumes/logs/app/README"
 
-						chown 100:101 "development/versions/$ojsNum/$os/$server/$php/volumes" -Rf
+						
 
 						mkdir -p "development/versions/$ojsNum/$os/$server/$php/volumes/db"
 						echo "Folder to keep persistent your DB files \
@@ -251,8 +251,7 @@ for ojs in "${ojsVersions[@]}"; do
 							  (uncomment the volume docker-compose.yml)" \
 							  > "development/versions/$ojsNum/$os/$server/$php/volumes/logs/db/README"
 
-						chown 999:999 "development/versions/$ojsNum/$os/$server/$php/volumes/logs/db" \
-						              "development/versions/$ojsNum/$os/$server/$php/volumes/db" -Rf
+						
 
 						# Here we can uncomment the volumes in docker-compose
 						# but probably is better keeping different docker-composes
@@ -274,11 +273,18 @@ for ojs in "${ojsVersions[@]}"; do
 							"development/versions/$ojsNum/$os/$server/$php/docker-compose-local.yml"
 
 						# Setting a link with a non versioned folder with the last avaliable php version
-	                                        if [[ -d "development/versions/$ojsNum/$os/$server/php" ]]; then
+	                    if [[ -d "development/versions/$ojsNum/$os/$server/php" ]]; then
 							unlink "development/versions/$ojsNum/$os/$server/php"
 						fi
 						ln -s "$php" "development/versions/$ojsNum/$os/$server/php"
+						
+						ln -s "/var/lib/docker/volumes/ojs-development_plugins/_data" "development/versions/$ojsNum/$os/$server/php/volumes/plugins"
+						
+						sudo chown 100:101 "development/versions/$ojsNum/$os/$server/$php/volumes" -Rf
 
+						sudo chown 999:999 "development/versions/$ojsNum/$os/$server/$php/volumes/logs/db" \
+						              "development/versions/$ojsNum/$os/$server/$php/volumes/db" -Rf
+						
 						printf "BUILT:    $ojsNum: [$server] $php (over $os)\n"
 					else
 						printf "\nERROR when building $ojs: [$server] $php (over $os)\n"
