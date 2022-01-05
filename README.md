@@ -9,18 +9,18 @@ Open Journal Systems (OJS) é um gerenciador e publicador de periódicos que foi
 
 Este repositório é um fork de um trabalho primeiramente feito pelo [Lucas Dietrich](https://github.com/lucasdiedrich/ojs) e [docker-ojs](http://github.com/pkp/docker-ojs).
 
-## Como usar para desenvolvimento
+## Construindo sua imagem local (development)
 
-Primeiro você deverá instalar o [docker](https://docs.docker.com/get-docker/) e [docker-compose](https://docs.docker.com/compose/) são necessários.
+Primeiro você deverá instalar o [docker](https://docs.docker.com/get-docker/) e [docker-compose](https://docs.docker.com/compose/).
 
 Para todas as versão são disponibilizados os seguintes arquivos: **docker-compose.yml** e **docker-compose-local.yml**.  
  - O arquivo **docker-compose.yml** contém a imagem oficial da pkp para produção. (em alfa)
- - O **docker-compose-local.yml** tem os seguintes serviços:  
+ - O **docker-compose-local.yml** possui os seguintes serviços:  
    - Aplicação ([OJS](http://github.com/pkp/ojs))
    - Banco de dados ([MariaDB](https://hub.docker.com/_/mariadb))
    - Serviço de e-mail(SMTP) para testes ([Mailhog](https://github.com/mailhog/MailHog))
 
-1. Faça o clone do repositório via SSH na sua máquina:
+1. Faça o clone do repositório via SSH/HTTP na sua máquina:
 
    ```
    git clone git@gitlab.lepidus.com.br:softwares-pkp/docker-ojs.git
@@ -61,21 +61,17 @@ Para todas as versão são disponibilizados os seguintes arquivos: **docker-comp
 
 5. Acesse **http://127.0.0.1:8081** e continue o processo de instalação via web.
 
-   Note that the database connection needs the following options:
+   Para configurar o banco de dados utilize as seguintes opções:
 
-   - **Database driver**: `mysqli` (or "mysql" if your php is lower than 7.3)
+   - **Database driver**: `mysqli` (ou "mysql" se o php for menor que 7.3)
    - **Host**: `db` (which is the name of the container in the internal Docker network)
    - **Username**: `ojs`
    - **Password**: `ojs`
    - **Database name**: `ojs`
-   - _Uncheck_ "Create new database"
-   - _Uncheck_ "Beacon"
+   - _Desmarque_ "Create new database"
+   - _Desmarque_ "Beacon"
 
-   And the  "Directory for uploads:" acording to your docker-compose "/var/www/files"
-
-    | **TIP:**             |
-    |:---------------------|
-    | To go through the OJS installation process automatically, set the environment variable `OJS_CLI_INSTALL=1`, and use the other .env variables to automatize the process. |
+   O Diretório de uploads de acordo com o arquivo docker-compose "/var/www/files"
 
 ## Construindo sua imagem local
 
@@ -94,27 +90,10 @@ To do this...
 
     If something goes wrong, double-check if you ran the former command with the right version number or in a folder without the local Dockerfile.
 
-2. Once the image is built, you can run the stack locally telling compose to use the local yaml file with the `-f`/`--file` option as follows:
-    ```bash
-    $ docker-compose --file docker-compose-local.yml up
-    ```
+## Variáveis de ambiente
+Nas configuração do arquivo docker-compose.yml é lido outro arquivo **.env** no qual contém algumas variáveis de ambiente como porta HTTP/MYSQL
 
-## Environment Variables
-
-The image understand the following environment variables:
-
-| NAME            | Default   | Info                 |
-|:---------------:|:---------:|:---------------------|
-| SERVERNAME      | localhost | Used to generate httpd.conf and certificate            |
-| OJS_CLI_INSTALL | 0         | Used to install ojs automatically when start container |
-| OJS_DB_HOST     | db        | Database host        |
-| OJS_DB_USER     | ojs       | Database             |
-| OJS_DB_PASSWORD | ojsPwd    | Database password    |
-| OJS_DB_NAME     | ojs       | Database name        |
-
-_**Note:** OJS_CLI_INSTALL and certificate features are under construction._
-
-## Special Volumes
+## Volumes
 
 Docker content is efimerous by design, but in some situations you would like
 to keep some stuff **persistent** between docker falls (ie: database content,
@@ -254,43 +233,6 @@ $ ./build.sh 3_1_2-4
 # generate _all_ versions
 $ ./build.sh
 ```
-
-## Add a new stack to the list
-
-Let's say we like us to distribute a "nginx" stack. We have our hands full but
-you know docker and nginx so... ¿how could you contribute?
-
-1. Be sure the version number is in the versions.list file (ie: 3_2_1-0).
-2. Create the required files and folders in the templates folder.
-
-   Basically you will need:
-
-   - A Dockerfile template for each php version you publish (ie: dockerfile-alpine-nginx-php73.template)
-   - A generic docker-compose.yml template (templates/dockerComposes/docker-compose-nginx.template)
-   - A folder with all the specific configurations (templates/webServers/nginx/php73/root)
-   - Extend exclude.list with the stuff you want to be removed.
-
-   This is the hard work. Take apache as a reference and contact us if you need indications.
-
-3. Edit build.sh to add your version to the proper variables.
-
-   For the nginx exemple (over alpine) it should be enough extending the webServers array:
-   ```
-   webServers=(  'apache' 'nginx' )
-   ```
-   Modify the script if you need it to be smarter.
-
-4. Run build script to generate all versions again:
-
-   ```bash
-   $ ./build.sh
-   ```
-
-5. Test your work running docker-compose with local dockerfiles.
-
-6. Commit a PR with your new build.sh and templates (ignore the versions folder).
-
-
 ## License
 
 GPL3 © [PKP](https://github.com/pkp)
