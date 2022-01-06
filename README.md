@@ -1,11 +1,11 @@
 # OJS (Open Journal Systems) - PKP - Container/Docker
 
 
-| **IMPORTANT:** |
-|:---------------------------------------------------------|
+| **IMPORTANT:**                                                                                                                                                                                                                        |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **This repository is still beta, so it should be used with care in production settings - please provide feedback early and often about your experience.** <br />We are actively working to release a stable version soon. Keep tuned. |
 
-Open Journal Systems (OJS) é um gerenciador e publicador de periódicos que foi desenvolvida pela [Public Knowledge Project](https://pkp.sfu.ca/) atráves dos seus esforços federais de financiamento para expandir e melhorar o acesso à pesquisa.   
+Open Journal Systems (OJS) é um gerenciador e publicador de periódicos que foi desenvolvida pela [Public Knowledge Project](https://pkp.sfu.ca/) atráves dos seus esforços federais de financiamento para expandir e melhorar o acesso à pesquisa.
 
 Este repositório é um fork de um trabalho primeiramente feito pelo [Lucas Dietrich](https://github.com/lucasdiedrich/ojs) e [docker-ojs](http://github.com/pkp/docker-ojs).
 
@@ -13,9 +13,9 @@ Este repositório é um fork de um trabalho primeiramente feito pelo [Lucas Diet
 
 Primeiramente, é necessário instalar o [docker](https://docs.docker.com/get-docker/) e [docker-compose](https://docs.docker.com/compose/).
 
-Para todas as versão são disponibilizados os seguintes arquivos: **docker-compose.yml** e **docker-compose-local.yml**.  
+Para todas as versão são disponibilizados os seguintes arquivos: **docker-compose.yml** e **docker-compose-local.yml**.
  - O arquivo **docker-compose.yml** contém a imagem oficial da pkp para produção. (em alfa)
- - O **docker-compose-local.yml** possui os seguintes serviços:  
+ - O **docker-compose-local.yml** possui os seguintes serviços:
    - Aplicação ([OJS](http://github.com/pkp/ojs))
    - Banco de dados ([MariaDB](https://hub.docker.com/_/mariadb))
    - Serviço de e-mail(SMTP) para testes ([Mailhog](https://github.com/mailhog/MailHog))
@@ -43,7 +43,7 @@ Para todas as versão são disponibilizados os seguintes arquivos: **docker-comp
    ```dockerfile
    ojs:
     image: local/ojs:3_3_0-8
-   ``` 
+   ```
    Execute o seguinte comando `docker build -t local/ojs:<versão> .` substituindo **<versão>** pela versão desejada.
    ```
    docker build -t local/ojs:3_3_0-8 .
@@ -66,7 +66,7 @@ Para todas as versão são disponibilizados os seguintes arquivos: **docker-comp
    Para configurar o banco de dados utilize as seguintes opções:
 
    - **Database driver**: `mysqli` (ou "mysql" se o php for menor que 7.3)
-   - **Host**: `db` 
+   - **Host**: `db`
    - **Username**: `ojs`
    - **Password**: `ojs`
    - **Database name**: `ojs`
@@ -77,7 +77,7 @@ Para todas as versão são disponibilizados os seguintes arquivos: **docker-comp
 ## Variáveis de ambiente
 Na configuração do arquivo docker-compose.yml é lido outro arquivo **.env** no qual contém algumas variáveis de ambiente como porta HTTP/MYSQL.
 
-| Nome            | Container   | Informação                 |
+| Nome            | Container   | Informação         |
 |:---------------:|:---------:|:---------------------|
 | MYSQL_ROOT_PASSWORD    | db      | Senha do usuário root do banco de dados|
 | MYSQL_USER             | db      | Nome de usuário do banco de dados|
@@ -87,7 +87,7 @@ Na configuração do arquivo docker-compose.yml é lido outro arquivo **.env** n
 | SMTP_MAILHOG_PORT      | mailhog | Porta SMTP utilizada pelo mailhog|
 | SMTP_MAILHOG_HTTP_PORT | mailhog | Porta HTTP utilizada pelo mailhog|
 | HTTP_PORT              | ojs     | Porta HTTP utilizada pelo OJS    |
-| HTTPS_PORT             | ojs     | Porta HTTPs utilizada pelo OJS   |                              
+| HTTPS_PORT             | ojs     | Porta HTTPs utilizada pelo OJS   |
 | COMPOSE_PROJECT_NAME   | todos   | Define o nome do projeto         |
 ## Volumes
 
@@ -113,7 +113,7 @@ Quando você executar o docker-compose, os volumes com os dados serão montados 
 Nesta imagem, usamos [bind volumes](https://docs.docker.com/storage/bind-mounts/) com caminhos relativos porque
 oferecem uma visão clara de onde seus dados estão armazenados.
 
-O lado negativo desses volumes é que eles não podem ser [nomeados](https://towardsdatascience.com/the-complete-guide-to-docker-volumes-1a06051d2cce), o docker irá armazená-los no caminho absoluto. Como esta é apenas uma imagem sinta-se livre para modificá-la de acordo com suas necessidades.
+O lado negativo desses volumes é que eles não podem ser [nomeados](https://towardsdatascience.com/the-complete-guide-to-docker-volumes-1a06051d2cce), o docker irá armazená-los no caminho absoluto. Como esta é apenas uma imagem, sinta-se livre para modificá-la de acordo com suas necessidades.
 
 Por último, mas não menos importante, essas pastas de armazenamento precisam existir com as permissões corretas
 antes de executar o docker-compose ou ele falhará.
@@ -142,7 +142,7 @@ O Dockerfile inclui alguns scripts em "/usr/local/bin" para facilitar operaçõe
 **Alguns desses scripts ainda estão na versão beta, seja cuidadoso em usá-los.**
 
 Você pode chamar os scripts fora do contêiner seguindo os passos abaixo:
-   
+
    ```bash
    $ docker exec -it <nome/id-do-container> /usr/local/bin/ojs-variable session_check_ip Off
    ```
