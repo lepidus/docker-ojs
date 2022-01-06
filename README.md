@@ -5,13 +5,13 @@
 |:---------------------------------------------------------|
 | **This repository is still beta, so it should be used with care in production settings - please provide feedback early and often about your experience.** <br />We are actively working to release a stable version soon. Keep tuned. |
 
-Open Journal Systems (OJS) é um gerenciador e publicador de periódicos que foi desenvolvida pela [Public Knowledge Project](https://pkp.sfu.ca/) atráves dos seus esforços federais de financiamento para expandir e melhorar o acesso a pesquisa.   
+Open Journal Systems (OJS) é um gerenciador e publicador de periódicos que foi desenvolvida pela [Public Knowledge Project](https://pkp.sfu.ca/) atráves dos seus esforços federais de financiamento para expandir e melhorar o acesso à pesquisa.   
 
 Este repositório é um fork de um trabalho primeiramente feito pelo [Lucas Dietrich](https://github.com/lucasdiedrich/ojs) e [docker-ojs](http://github.com/pkp/docker-ojs).
 
 ## Construindo sua imagem local (development)
 
-Precisa instalar o [docker](https://docs.docker.com/get-docker/) e [docker-compose](https://docs.docker.com/compose/).
+Primeiramente, é necessário instalar o [docker](https://docs.docker.com/get-docker/) e [docker-compose](https://docs.docker.com/compose/).
 
 Para todas as versão são disponibilizados os seguintes arquivos: **docker-compose.yml** e **docker-compose-local.yml**.  
  - O arquivo **docker-compose.yml** contém a imagem oficial da pkp para produção. (em alfa)
@@ -39,7 +39,7 @@ Para todas as versão são disponibilizados os seguintes arquivos: **docker-comp
    ```
 
 3. Entre no diretório `development/versions/<versão desejada>/php/`
-   Dê uma olhada no arquivo **docker-compose-local.yml** procure pela tag **image** abaixo do **ojs**:
+   Dê uma olhada no arquivo **docker-compose-local.yml** e procure pela tag **image** abaixo do **ojs**:
    ```dockerfile
    ojs:
     image: local/ojs:3_3_0-8
@@ -66,16 +66,16 @@ Para todas as versão são disponibilizados os seguintes arquivos: **docker-comp
    Para configurar o banco de dados utilize as seguintes opções:
 
    - **Database driver**: `mysqli` (ou "mysql" se o php for menor que 7.3)
-   - **Host**: `db` (which is the name of the container in the internal Docker network)
+   - **Host**: `db` 
    - **Username**: `ojs`
    - **Password**: `ojs`
    - **Database name**: `ojs`
    - _Desmarque_ "Create new database"
    - _Desmarque_ "Beacon"
 
-   O Diretório de uploads de acordo com o arquivo docker-compose "/var/www/files"
+   O Diretório de uploads está de acordo com o arquivo docker-compose "/var/www/files"
 ## Variáveis de ambiente
-Nas configuração do arquivo docker-compose.yml é lido outro arquivo **.env** no qual contém algumas variáveis de ambiente como porta HTTP/MYSQL.
+Na configuração do arquivo docker-compose.yml é lido outro arquivo **.env** no qual contém algumas variáveis de ambiente como porta HTTP/MYSQL.
 
 | Nome            | Container   | Informação                 |
 |:---------------:|:---------:|:---------------------|
@@ -113,7 +113,7 @@ Quando você executar o docker-compose, os volumes com os dados serão montados 
 Nesta imagem, usamos [bind volumes](https://docs.docker.com/storage/bind-mounts/) com caminhos relativos porque
 oferecem uma visão clara de onde seus dados estão armazenados.
 
-O lado negativo desses volumes é que eles não podem ser [nomeados](https://towardsdatascience.com/the-complete-guide-to-docker-volumes-1a06051d2cce) o docker irá armazená-los no caminho absoluto. Como esta é apenas uma imagem sinta-se livre para modificá-la de acordo com suas necessidades.
+O lado negativo desses volumes é que eles não podem ser [nomeados](https://towardsdatascience.com/the-complete-guide-to-docker-volumes-1a06051d2cce), o docker irá armazená-los no caminho absoluto. Como esta é apenas uma imagem sinta-se livre para modificá-la de acordo com suas necessidades.
 
 Por último, mas não menos importante, essas pastas de armazenamento precisam existir com as permissões corretas
 antes de executar o docker-compose ou ele falhará.
@@ -132,11 +132,11 @@ O Dockerfile inclui alguns scripts em "/usr/local/bin" para facilitar operaçõe
 | Script               | Container  | Descrição|
 |:---------------------|:----------:|:---------|
 | ojs-run-scheduled    | ojs        | Roda "php tools/runScheduledTasks.php". Chamada pelo cron a cada hora.                              |
-| ojs-cli-install      | ojs        | Usa curl para instalar OJS através variáveis definidas no arquivo `.env` (Não funciona).            |
+| ojs-cli-install      | ojs        | Usa curl para instalar OJS através das variáveis definidas no arquivo `.env` (Não funciona).            |
 | ojs-pre-start        | ojs        | Garante algumas variáveis de configuração e gera um certificado auto-assinado baseado no ServerName.|
 | ojs-upgrade          | ojs        | Roda "php tools/upgrade.php upgrade" (problemas quando config.inc.php é um volume).                 |
 | ojs-variable         | ojs        | Substitui o valor da variável em config.inc.php (exemplo: ojs-variable variable newValue)           |
-| ojs-migrate          | ojs        | Pega um dump.sql, arquivos publicos e privados da pasta "migration" e constrói um site docker (beta)|
+| ojs-migrate          | ojs        | Pega um dump.sql, arquivos públicos e privados da pasta "migration" e constrói um site docker (beta)|
 
 
 **Alguns desses scripts ainda estão na versão beta, seja cuidadoso em usá-los.**
