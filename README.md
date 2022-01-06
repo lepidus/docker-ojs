@@ -11,7 +11,7 @@ Este repositório é um fork de um trabalho primeiramente feito pelo [Lucas Diet
 
 ## Construindo sua imagem local (development)
 
-Primeiro você deverá instalar o [docker](https://docs.docker.com/get-docker/) e [docker-compose](https://docs.docker.com/compose/).
+Precisa instalar o [docker](https://docs.docker.com/get-docker/) e [docker-compose](https://docs.docker.com/compose/).
 
 Para todas as versão são disponibilizados os seguintes arquivos: **docker-compose.yml** e **docker-compose-local.yml**.  
  - O arquivo **docker-compose.yml** contém a imagem oficial da pkp para produção. (em alfa)
@@ -48,7 +48,9 @@ Para todas as versão são disponibilizados os seguintes arquivos: **docker-comp
    ```
    docker build -t local/ojs:3_3_0-8 .
    ```
-
+   | **OBS:** |
+   :-----------------------------------------------------------------------------------|
+   | Se algo der errado verifique novamente se você executou o comando anterior com o número de versão correto ou em uma pasta sem o Dockerfile local. |
 4. Após a construção da imagem do passo anterior execute o seguinte comando:
    ```
    docker-compose -f docker-compose-local.yml up
@@ -72,167 +74,78 @@ Para todas as versão são disponibilizados os seguintes arquivos: **docker-comp
    - _Desmarque_ "Beacon"
 
    O Diretório de uploads de acordo com o arquivo docker-compose "/var/www/files"
-
-## Construindo sua imagem local
-
-Each version folder also includes has a file called `docker-compose-local.yml`.
-
-This compose won't ask dockerHub for the required images, it expects you build a docker image locally.
-
-This is useful if you don't want external dependencies or you like to modify our official Dockerfiles to fit your specific needs.
-
-To do this...
-
-1. Go to your preferred version folder and and build the image as follows:
-    ```bash
-    $ docker build -t local/ojs:3_2_1-4 .
-    ```
-
-    If something goes wrong, double-check if you ran the former command with the right version number or in a folder without the local Dockerfile.
-
 ## Variáveis de ambiente
-Nas configuração do arquivo docker-compose.yml é lido outro arquivo **.env** no qual contém algumas variáveis de ambiente como porta HTTP/MYSQL
+Nas configuração do arquivo docker-compose.yml é lido outro arquivo **.env** no qual contém algumas variáveis de ambiente como porta HTTP/MYSQL.
 
+| Nome            | Container   | Informação                 |
+|:---------------:|:---------:|:---------------------|
+| MYSQL_ROOT_PASSWORD    | db      | Senha do usuário root do banco de dados|
+| MYSQL_USER             | db      | Nome de usuário do banco de dados|
+| MYSQL_PASSWORD         | db      | Senha do usuário do banco de dados|
+| MYSQL_DATABASE         | db      | Nome do banco de dados|
+| MYSQL_PORT             | db      | Porta utilizada pelo banco de dados|
+| SMTP_MAILHOG_PORT      | mailhog | Porta SMTP utilizada pelo mailhog|
+| SMTP_MAILHOG_HTTP_PORT | mailhog | Porta HTTP utilizada pelo mailhog|
+| HTTP_PORT              | ojs     | Porta HTTP utilizada pelo OJS    |
+| HTTPS_PORT             | ojs     | Porta HTTPs utilizada pelo OJS   |                              
+| COMPOSE_PROJECT_NAME   | todos   | Define o nome do projeto         |
 ## Volumes
 
-Docker content is efimerous by design, but in some situations you would like
-to keep some stuff **persistent** between docker falls (ie: database content,
-upload files, plugin development...)
+Por padrão é incluído uma estrutura de diretórios em cada versão dentro do diretório `versions`, veja o diretório `./volumes` que inicialmente encontra-se vazio.
+Quando você executar o docker-compose os volumes serão montados de acordo com sua configuração do arquivo `docker-compose.yml` ou `docker-compose-local.yml`. Para habilitar determinado volume basta descomentar a linha nos arquivos citados.
 
-By default we include an structure of directories in the version folders
-(see ./volumes), but they are empty and disabled by default in your compose.
-To enable them, **you only need to uncomment the volume lines in
-your docker-compose.yml** and fill the folders properly.
+Quando você executar o docker-compose, os volumes com os dados serão montados e permitirá que você compartilhe arquivos de seu host com o contêiner.
 
-When you run the docker-compose it will mount the volumes with persistent
-data and will let you share files from your host with the container.
-
-
-| Host                                    | Container  | Volume                                | Description                    |
+| Host                                    | Container  | Volume                                | Descrição                    |
 |:----------------------------------------|:----------:|:--------------------------------------|:-------------------------------|
-| ./volumes/public                        | ojs        | /var/www/html/public                  | All public files               |
-| ./volumes/private                       | ojs        | /var/www/files                        | All private files (uploads)    |
-| ./volumes/config/db.charset.conf        | db         | /etc/mysql/conf.d/charset.cnf         | mariaDB config file            |
-| ./volumes/config/ojs.config.inc.php     | ojs        | /var/www/html/config.inc.php          | OJS config file                |
+| ./volumes/public                        | ojs        | /var/www/html/public                  | Todos os arquivos públicos |
+| ./volumes/private                       | ojs        | /var/www/files                        | Todos os arquivos privados (uploads) |
+| ./volumes/config/db.charset.conf        | db         | /etc/mysql/conf.d/charset.cnf         | Arquivo de configuração do mariaDB |
+| ./volumes/config/ojs.config.inc.php     | ojs        | /var/www/html/config.inc.php          | Arquivos de configuração do OJS |
 | ./volumes/config/php.custom.ini         | ojs        | /usr/local/etc/php/conf.d/custom.ini  | PHP custom.init                |
 | ./volumes/config/apache.htaccess        | ojs        | /var/www/html/.htaccess               | Apache2 htaccess               |
 | ./volumes/logs/app                      | ojs        | /var/log/apache2                      | Apache2 Logs                   |
 | ./volumes/logs/db                       | db         | /var/log/mysql                        | mariaDB Logs                   |
 | ./volumes/db                            | db         | /var/lib/mysql                        | mariaDB database content       |
 | ./volumes/migration                     | db         | /docker-entrypoint-initdb.d           | DB init folder (with SQLs)     |
-| /etc/localtime                          | ojs        | /etc/localtime                        | Sync clock with the host one.  |
-| TBD                                     | ojs        | /etc/ssl/apache2/server.pem           | SSL **crt** certificate        |
-| TBD                                     | ojs        | /etc/ssl/apache2/server.key           | SSL **key** certificate        |
+| /etc/localtime                          | ojs        | /etc/localtime                        | Sincroniza a data/hora do container com a máquina host. |
 
-In this image we use "bind volumes" with relative paths because it will 
-give you a clear view where your data is stored.
+Nesta imagem, usamos [bind volumes](https://docs.docker.com/storage/bind-mounts/) com caminhos relativos porque
+oferecem uma visão clara de onde seus dados estão armazenados.
 
-The down sides of those volumes is they can not be "named" and docker will 
-store them with an absolute path (that it’s annoying to make stuff portable) 
-but I prefer better control about where data is stored than leave it in docker hands.
+O lado negativo desses volumes é que eles não podem ser [nomeados](https://towardsdatascience.com/the-complete-guide-to-docker-volumes-1a06051d2cce) o docker irá armazená-los no caminho absoluto. Como esta é apenas uma imagem sinta-se livre para modificá-la de acordo com suas necessidades.
 
-This is just an image, so feel free to modify to fit your needs.
+Por último, mas não menos importante, essas pastas de armazenamento precisam existir com as permissões corretas
+antes de executar o docker-compose ou ele falhará.
 
-You can add your own volumes. For instance, make sense for a plugin developer
-or a themer to create a volume with his/her work, to keep a persistent copy in
-the host of the new plugin or theme.
-
-An alternative way of working for developers is working with his/her own local
-Dockerfile that will be build to pull the plugin for his/her own repository...
-but this will be significantly slower than the volume method.
-
-Last but not least, those storage folders need to exist with the right permissions
-before you run your docker-compose or it will fail.
-
-To be sure your volumes have the right permissions, you can run those commands:
-
+Para ter certeza de que seus volumes têm as permissões corretas, você pode executar estes comandos:
    ```bash
    $ chown 100:101 ./volumes -R
    $ chown 999:999 ./volumes/db -R
    $ chown 999:999 ./volumes/logs/db -R
    ```
-
-In other words... all the content inside volumes will be owned by apache2 user
-and group (uid 100 and gid 101 inside the container), execpt for db and logs/db
-folders that will be owned by mysql user and group (uid and gid 999).
-
-
+Em outras palavras ... todo o conteúdo dentro dos volumes pertence ao usuário apache2 e grupo (uid 100 e gid 101 dentro do conteiner), exceto para db e logs / db, pastas que pertencerão ao usuário e grupo mysql (uid e gid 999).
 ## Built in scripts
 
-The Dockerfile includes some scritps at "/usr/local/bin" to facilitate common opperations:
+O Dockerfile inclui alguns scripts em "/usr/local/bin" para facilitar operações comumente utilizadas:
 
-| Script               | Container  | Description                                                                                                   |
-|:---------------------|:----------:|:--------------------------------------------------------------------------------------------------------------|
-| ojs-run-scheduled    | ojs        | Runs "php tools/runScheduledTasks.php". Called by cron every hour.                                            |
-| ojs-cli-install      | ojs        | Uses curl to call the ojs install using pre-defined variables.                                                |
-| ojs-pre-start        | ojs        | Enforces some config variables and generates a self-signed cert based on ServerName.                          |
-| ojs-upgrade          | ojs        | Runs "php tools/upgrade.php upgrade". (issue when config.inc.php is a volume)                                 |
-| ojs-variable         | ojs        | Replaces the variable value in config.inc.php (ie: ojs-variable variable newValue)                            |
-| ojs-migrate          | ojs        | Takes a dump.sql, public and private files from "migration" folder and builds and builds a docker site (beta) |
+| Script               | Container  | Descrição|
+|:---------------------|:----------:|:---------|
+| ojs-run-scheduled    | ojs        | Roda "php tools/runScheduledTasks.php". Chamada pelo cron a cada hora.                              |
+| ojs-cli-install      | ojs        | Usa curl para instalar OJS através variáveis definidas no arquivo `.env` (Não funciona).            |
+| ojs-pre-start        | ojs        | Garante algumas variáveis de configuração e gera um certificado auto-assinado baseado no ServerName.|
+| ojs-upgrade          | ojs        | Roda "php tools/upgrade.php upgrade" (problemas quando config.inc.php é um volume).                 |
+| ojs-variable         | ojs        | Substitui o valor da variável em config.inc.php (exemplo: ojs-variable variable newValue)           |
+| ojs-migrate          | ojs        | Pega um dump.sql, arquivos publicos e privados da pasta "migration" e constrói um site docker (beta)|
 
-Some of those scripts are still beta, you be careful when you use them.
 
-You can call the scripts outside the container as follows:
+**Alguns desses scripts ainda estão na versão beta, seja cuidadoso em usá-los.**
 
+Você pode chamar os scripts fora do contêiner seguindo os passos abaixo:
+   
    ```bash
-   $ docker exec -it ojs_app_journalname /usr/local/bin/ojs-variable session_check_ip Off
+   $ docker exec -it <nome/id-do-container> /usr/local/bin/ojs-variable session_check_ip Off
    ```
-## Apache2
-
-As said, right now the only avaliable stack is Apache2, so configuration files
-and volumes are thought you will work over an apache.
-
-If you want to know the fastest method to set your own config jump to the next
-section **["Easy way to change config stuff"](#easy-way-to-change-config-stuff)**.
-
-For those who like to understand what happens behind the courtains, you need to
-know that during the image building we ask the Dockerfile to copy the content of
-`./templates/webServers/apache/phpVersion/root` folder in the root
-of your container.
-
-It means, if you like to add your specific php settings you can do it
-creating a PHP configuration in `./templates/webServers/php{5,7,73}/conf.d/0-ojs.ini`
-and build you own image locally.
-
-There are some optimized variables already, you can check them within each
-version directory, e.g. `/root/etc/apache2/conf.d/ojs.conf` with your virtualhost
-or `/etc/supervisor.conf`... or, now you know what Dockerfile will do, you
-can add your own.
-
-**Again:** Note that template's /root folder is copied into the Docker image
-**at build time** so, if you change it, you must rebuild the image for changes
-to take effect.
-
-## Update the compose configurations and Dockerfiles
-
-If you want to join the docker-ojs (aka. docker4ojs) team you will like to
-contribute with new Dockerfiles or docker-composes. To do this, you will need
-to clone this project and send us a PR with your contributions.
-
-Before we follow, let us clarify something:
-Versions of this project fit with OJS tag versions, BUT...
-if you take a look to PKP's repositories, you will notice the tag naming
-syntax changed at version 3.1.2-0. We moved from "ojs-3_1_2-0" to "3_1_2-0".
-
-So, to avoid keeping in mind at what momment we changed the syntax, in this
-project we only use the modern syntax, so you cant/must refer every version
-with the same notation.
-
-Said this, let's talk about how we generate all this versions:
-
-The files for the different OJS versions and software stacks are generated based
-on a number of template files, see directory `templates`.
-
-You can re-generate all `Dockerfile`, `docker-compose(-local).yml`, configuration
-files, etc. calling the `build.sh` script.
-
-```bash
-# generate a specific version
-$ ./build.sh 3_1_2-4
-
-# generate _all_ versions
-$ ./build.sh
-```
-## License
+## Licença
 
 GPL3 © [PKP](https://github.com/pkp)
