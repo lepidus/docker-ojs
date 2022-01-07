@@ -13,7 +13,7 @@ Este repositório é um fork de um trabalho primeiramente feito pelo [Lucas Diet
 
 Primeiramente, é necessário instalar o [docker](https://docs.docker.com/get-docker/) e [docker-compose](https://docs.docker.com/compose/).
 
-Para todas as versão são disponibilizados os seguintes arquivos: **docker-compose.yml** e **docker-compose-local.yml**.
+Para todas as versões são disponibilizados os seguintes arquivos: **docker-compose.yml** e **docker-compose-local.yml**.
  - O arquivo **docker-compose.yml** contém a imagem oficial da pkp para produção. (em alfa)
  - O **docker-compose-local.yml** possui os seguintes serviços:
    - Aplicação ([OJS](http://github.com/pkp/ojs))
