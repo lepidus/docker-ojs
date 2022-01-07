@@ -11,7 +11,7 @@ Este repositório é um fork de um trabalho primeiramente feito pelo [Lucas Diet
 
 ## Construindo sua imagem local (development)
 
-Primeiramente, é necessário instalar o [docker](https://docs.docker.com/get-docker/) e [docker-compose](https://docs.docker.com/compose/).
+Primeiramente, é necessário instalar o [docker](https://docs.docker.com/get-docker/) e [docker-compose](https://docs.docker.com/compose/install/).
 
 Para todas as versões são disponibilizados os seguintes arquivos: **docker-compose.yml** e **docker-compose-local.yml**.
  - O arquivo **docker-compose.yml** contém a imagem oficial da pkp para produção. (em alfa)
