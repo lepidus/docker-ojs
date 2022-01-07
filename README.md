@@ -38,7 +38,7 @@ Para todas as versões são disponibilizados os seguintes arquivos: **docker-com
    ./develop-build.sh 3_3_0-8
    ```
 
-3. Entre no diretório `development/versions/<versão desejada>/alpine/apache/<versão desejada do php/`
+3. Entre no diretório `development/versions/<versão desejada>/alpine/apache/<versão desejada do php>/`
    Dê uma olhada no arquivo **docker-compose-local.yml** e procure pela tag **image** abaixo do **ojs**:
    ```dockerfile
    ojs:
