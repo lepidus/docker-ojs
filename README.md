@@ -11,7 +11,7 @@ Este repositório é um fork de um trabalho primeiramente feito pelo [Lucas Diet
 
 ## Construindo sua imagem local (development)
 
-Primeiramente, é necessário instalar o [docker](https://docs.docker.com/get-docker/) e [docker-compose](https://docs.docker.com/compose/install/) junto com o processo de [pós-instalação](https://docs.docker.com/engine/install/linux-postinstall/) do docker.
+Primeiramente, é necessário instalar o [docker](https://docs.docker.com/get-docker/) e [docker-compose](https://docs.docker.com/compose/install/), junto com o processo de [pós-instalação](https://docs.docker.com/engine/install/linux-postinstall/) do docker.
 
 Para todas as versões são disponibilizados os seguintes arquivos: **docker-compose.yml** e **docker-compose-local.yml**.
  - O arquivo **docker-compose.yml** contém a imagem oficial da pkp para produção. (em alfa)
@@ -33,7 +33,7 @@ Para todas as versões são disponibilizados os seguintes arquivos: **docker-com
    | **DICAS:** |
    :-----------------------------------------------------------------------------------|
    | O script faz uso do sudo e gera todas as versões do OJS ou uma versão de sua escolha. |
-   Para utilizar a versão específica basta informa a versão como argumento:
+   Para utilizar a versão específica basta informar a versão como argumento:
    ```
    ./develop-build.sh 3_3_0-8
    ```
@@ -61,7 +61,7 @@ Para todas as versões são disponibilizados os seguintes arquivos: **docker-com
    ```
    docker-compose -f docker-compose-local.yml up -d
    ```
-   caso não queria ver os logs dos containeres.
+   caso não queira ver os logs dos containeres.
 
 5. Acesse **http://127.0.0.1:8081** e continue o processo de instalação via web.
 
