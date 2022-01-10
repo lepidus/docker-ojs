@@ -50,7 +50,9 @@ Para todas as versões são disponibilizados os seguintes arquivos: **docker-com
    ```
    | **OBS:** |
    :-----------------------------------------------------------------------------------|
-   | Se algo der errado verifique novamente se você executou o comando anterior com o número de versão correto ou em uma pasta sem o Dockerfile local. |
+   | 1- Se algo der errado, verifique novamente se você executou o comando anterior com o número de versão correto ou em uma pasta sem o Dockerfile local. |
+   | 2 - O ponto (.) após o docker build (acima) não é um erro de digitação, inclua o ponto como parte do comando.|
+
 4. Após a construção da imagem do passo anterior execute o seguinte comando:
    ```
    docker-compose -f docker-compose-local.yml up
@@ -59,7 +61,7 @@ Para todas as versões são disponibilizados os seguintes arquivos: **docker-com
    ```
    docker-compose -f docker-compose-local.yml up -d
    ```
-   Caso não queria ver os logs dos containeres.
+   caso não queria ver os logs dos containeres.
 
 5. Acesse **http://127.0.0.1:8081** e continue o processo de instalação via web.
 
