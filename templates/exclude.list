@@ -8,7 +8,7 @@
 .scrutinizer.yml
 .travis.yml
 /root/.composer
-/root/.npm
+/root/.yarn
 /usr/local/bin/composer
 /var/cache/apk/*
 babel.config.js

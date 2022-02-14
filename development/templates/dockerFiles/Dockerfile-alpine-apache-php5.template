@@ -74,7 +74,7 @@ ENV PHP_EXTENSIONS	\
 ENV BUILDERS 		\
 	git 			\
 	nodejs 			\
-	npm
+	yarn
 
 # To make a smaller image, we start with the copy.
 # This let us joining runs in a single layer.
