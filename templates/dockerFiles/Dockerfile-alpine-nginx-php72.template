@@ -31,7 +31,7 @@ RUN apk add --update --no-cache $PACKAGES && \
     composer update -d lib/pkp --no-dev && \
     composer install -d plugins/paymethod/paypal --no-dev && \
     composer install -d plugins/generic/citationStyleLanguage --no-dev && \
-    yarn add && yarn run build && \
+    yarn && yarn run build && \
     # Create directories
     mkdir -p /var/www/files /run/nginx  /run/supervisord/ /etc/ssl/nginx && \
     cp config.TEMPLATE.inc.php config.inc.php && \

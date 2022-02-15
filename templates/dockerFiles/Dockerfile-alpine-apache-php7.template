@@ -32,7 +32,7 @@ RUN apk add --update --no-cache $PACKAGES && \
 RUN composer update -d lib/pkp --no-dev && \
     composer install -d plugins/paymethod/paypal --no-dev && \
     composer install -d plugins/generic/citationStyleLanguage --no-dev && \
-    yarn add && yarn run build
+    yarn && yarn run build
 
 # Create directories
 RUN mkdir -p /var/www/files /run/apache2  /run/supervisord/ && \

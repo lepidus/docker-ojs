@@ -101,7 +101,7 @@ RUN set -xe \
  	&& composer.phar --working-dir=plugins/paymethod/paypal install \
 	&& composer.phar --working-dir=plugins/generic/citationStyleLanguage install \
 	# Node joins to the party:
-	&& yarn add && yarn run build \
+	&& yarn && yarn run build \
 # Create directories
  	&& mkdir -p /var/www/files /run/apache2  /run/supervisord/ \
 	&& cp config.TEMPLATE.inc.php config.inc.php \
