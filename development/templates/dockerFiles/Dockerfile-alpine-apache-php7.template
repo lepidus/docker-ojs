@@ -20,7 +20,18 @@ ENV COMPOSER_ALLOW_SUPERUSER=1  \
              php7-dom php7-iconv curl nodejs git" \
     EXCLUDE_URL="https://raw.githubusercontent.com/pkp/docker-ojs/master/excludeVar.list"
 
-RUN apk add --update --no-cache $PACKAGES && \
+ENV BUILDERS 		\
+	git 			\
+	nodejs 			\
+    composer        \
+	yarn
+
+
+RUN set -xe \
+	&& apk add --no-cache --virtual .build-deps $BUILDERS \
+	&& apk add --update --no-cache $PACKAGES \
+    && apk add --no-cache $PHP_EXTENSIONS \
+    
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     # Configure and download code from git
     git config --global url.https://.insteadOf git:// && \
@@ -37,7 +48,7 @@ RUN composer update -d lib/pkp --no-dev && \
 # Create directories
 RUN mkdir -p /var/www/files /run/apache2  /run/supervisord/ && \
     cp config.TEMPLATE.inc.php config.inc.php && \
-    chown -R apache:apache /var/www/* && \
+    chown -R apache:apache /var/www/* \
     # Prepare freefont for captcha 
 	&& ln -s /usr/share/fonts/TTF/FreeSerif.ttf /usr/share/fonts/FreeSerif.ttf \
     # Prepare crontab
