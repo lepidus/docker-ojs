@@ -1,5 +1,5 @@
 # Set your journal Tag:
-COMPOSE_PROJECT_NAME=ojs-development
+COMPOSE_PROJECT_NAME=ojs-%%OJS_VERSION%%
 PROJECT_DOMAIN=journal.localhost
 SERVERNAME=$PROJECT_DOMAIN
 
