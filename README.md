@@ -159,7 +159,7 @@ No desenvolvimento de plugins para os softwares PKP na Lepidus, é necessário q
 Podemos fazer o clone de um repositório diretamente na pasta:
 
 ```shell
-cd /home/desenvolvedor/Lepidus/docker-ojs/development/versions/3_3_0-8/alpine/apache/php73/volumes/plugins/generic
+cd /home/usuario/docker-ojs/development/versions/3_3_0-8/alpine/apache/php73/volumes/plugins/generic
 
 git clone git@gitlab.lepidus.com.br:softwares-pkp/plugins_ojs/toggleMandatoryMetadata.git
 ```
@@ -167,7 +167,7 @@ git clone git@gitlab.lepidus.com.br:softwares-pkp/plugins_ojs/toggleMandatoryMet
 Ou podemos mover a pasta do plugin a ser desenvolvido para o diretório:
 
 ```shell
-mv toggleMandatoryMetadata /home/desenvolvedor/Documentos/Lepidus/Scielo/Docker/docker-ojs/development/versions/3_3_0-8/alpine/apache/php73/volumes/plugins/generic
+mv toggleMandatoryMetadata /home/usuario/docker-ojs/development/versions/3_3_0-8/alpine/apache/php73/volumes/plugins/generic
 ```
 
 Depois disso, basta ativar o plugin na galeria.
