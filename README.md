@@ -102,6 +102,7 @@ Quando você executar o docker-compose, os volumes com os dados serão montados 
 |:----------------------------------------|:----------:|:--------------------------------------|:-------------------------------|
 | ./volumes/public                        | ojs        | /var/www/html/public                  | Todos os arquivos públicos |
 | ./volumes/private                       | ojs        | /var/www/files                        | Todos os arquivos privados (uploads) |
+| ./volumes/plugins                       | ojs        | /var/www/html/plugins/                | Plugins do OJS                       |
 | ./volumes/config/db.charset.conf        | db         | /etc/mysql/conf.d/charset.cnf         | Arquivo de configuração do mariaDB |
 | ./volumes/config/ojs.config.inc.php     | ojs        | /var/www/html/config.inc.php          | Arquivos de configuração do OJS |
 | ./volumes/config/php.custom.ini         | ojs        | /usr/local/etc/php/conf.d/custom.ini  | PHP custom.init                |
@@ -148,6 +149,41 @@ Você pode chamar os scripts fora do contêiner seguindo os passos abaixo:
    ```bash
    $ docker exec -it <nome/id-do-container> /usr/local/bin/ojs-variable session_check_ip Off
    ```
+
+## Como desenvolver um plugin
+
+No desenvolvimento de plugins para os softwares PKP na Lepidus, é necessário que a pasta do plugin em questão esteja presente no diretório `/volumes/plugins/<categoria do plugin>`.
+
+**Exemplo**
+
+Podemos fazer o clone de um repositório diretamente na pasta:
+
+```shell
+cd /home/desenvolvedor/Lepidus/docker-ojs/development/versions/3_3_0-8/alpine/apache/php73/volumes/plugins/generic
+
+git clone git@gitlab.lepidus.com.br:softwares-pkp/plugins_ojs/toggleMandatoryMetadata.git
+```
+
+Ou podemos mover a pasta do plugin a ser desenvolvido para o diretório:
+
+```shell
+mv toggleMandatoryMetadata /home/desenvolvedor/Documentos/Lepidus/Scielo/Docker/docker-ojs/development/versions/3_3_0-8/alpine/apache/php73/volumes/plugins/generic
+```
+
+Depois disso, basta ativar o plugin na galeria.
+
+**Obervação**
+
+Caso não tenha acesso ao diretório `volumes/plugins`, você pode executar o seguinte comando como uma solução **temporária**:
+
+```shell
+cd /var/lib && sudo chmod -R  777 docker
+```
+
+**Padronização dos Plugins:**
+
+A PKP segue um padrão na hora de dar nome aos seus plugins desenvolvidos, e esse padrão é: O nome do targz gerado para ser submetido em `OJS > Website > PLugins` deve ser o mesmo da pasta ao ser transformada. E o nome da pasta do Plugin sempre está relacionada a classe principal do mesmo. Por exemplo: browseBySection(Pasta do plugin) = BrowseBySectionPlugin(Classe principal); customBlockManager(Pasta do plugin) = CustomBlockManagerPlugin. E mais um detalhe, e o nome das classes dos plugins sempre está relacionado a funcionalidade do plugin, sendo mais uma abreviação da funcionalidade, simples e direto.
+
 ## Licença
 
 GPL3 © [PKP](https://github.com/pkp)
