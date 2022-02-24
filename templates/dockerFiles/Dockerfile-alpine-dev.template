@@ -28,11 +28,11 @@ RUN apk add --update --no-cache $PACKAGES && \
     git clone --depth 1 --single-branch --branch $OJS_VERSION --progress https://github.com/pkp/ojs.git . && \
     git submodule update --init --recursive >/dev/null
 
-# Install NPM and Composer Deps
+# Install Yarn and Composer Deps
 RUN composer update -d lib/pkp --no-dev && \
     composer install -d plugins/paymethod/paypal --no-dev && \
     composer install -d plugins/generic/citationStyleLanguage --no-dev && \
-    npm install -y && npm run build
+    yarn && yarn run build
 
 # Create directories
 RUN mkdir -p /var/www/files /run/apache2  /run/supervisord/ && \

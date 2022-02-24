@@ -262,6 +262,11 @@ for ojs in "${ojsVersions[@]}"; do
 						"development/templates/dockerFiles/Dockerfile-$os-$server-$php.template" \
 						> "development/versions/$ojsNum/$os/$server/$php/Dockerfile"
 
+						#Adds individual volume for each version.
+						sed -e "s!%%OJS_VERSION%%!$ojs!g" \
+						"development/templates/common/env" \
+						> "development/versions/$ojsNum/$os/$server/$php/.env"
+
 						# docker-compose with remote images
 						sed -e "s!%%OJS_VERSION%%!$ojsNum!g" -e "s!%%OJS_IMAGE%%!pkpofficial/ojs!g" \
 						    "development/templates/dockerComposes/docker-compose-$server.template" \

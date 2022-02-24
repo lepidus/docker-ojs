@@ -78,7 +78,7 @@ ENV PHP_EXTENSIONS	\
 ENV BUILDERS 		\
 	git 			\
 	nodejs 			\
-	npm
+	yarn
 
 # To make a smaller image, we start with the copy.
 # This let us joining runs in a single layer.
@@ -101,7 +101,7 @@ RUN set -xe \
  	&& composer.phar --working-dir=plugins/paymethod/paypal install \
 	&& composer.phar --working-dir=plugins/generic/citationStyleLanguage install \
 	# Node joins to the party:
-	&& npm install -y && npm run build \
+	&& yarn && yarn run build \
 # Create directories
  	&& mkdir -p /var/www/files /run/apache2  /run/supervisord/ \
 	&& cp config.TEMPLATE.inc.php config.inc.php \
