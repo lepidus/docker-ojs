@@ -182,7 +182,7 @@ cd /var/lib && sudo chmod -R  777 docker
 
 **Padronização dos Plugins:**
 
-A PKP segue um padrão na hora de dar nome aos seus plugins desenvolvidos, e esse padrão é: O nome do targz gerado para ser submetido em `OJS > Website > PLugins` deve ser o mesmo da pasta ao ser transformada. E o nome da pasta do Plugin sempre está relacionada a classe principal do mesmo. Por exemplo: browseBySection(Pasta do plugin) = BrowseBySectionPlugin(Classe principal); customBlockManager(Pasta do plugin) = CustomBlockManagerPlugin. E mais um detalhe, e o nome das classes dos plugins sempre está relacionado a funcionalidade do plugin, sendo mais uma abreviação da funcionalidade, simples e direto.
+A PKP segue um padrão na hora de dar nome aos seus plugins desenvolvidos, e esse padrão é: O nome do tar.gz gerado para ser submetido em `OJS > Website > PLugins` deve ser o mesmo da pasta ao ser transformada. E o nome da pasta do Plugin sempre está relacionada a classe principal do mesmo. Por exemplo: browseBySection(Pasta do plugin) = BrowseBySectionPlugin(Classe principal); customBlockManager(Pasta do plugin) = CustomBlockManagerPlugin. E mais um detalhe, e o nome das classes dos plugins sempre está relacionado a funcionalidade do plugin, sendo mais uma abreviação da funcionalidade, simples e direto.
 
 ## Licença
 
