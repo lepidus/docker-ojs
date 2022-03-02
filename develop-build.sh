@@ -283,7 +283,7 @@ for ojs in "${ojsVersions[@]}"; do
 						fi
 						ln -s "$php" "development/versions/$ojsNum/$os/$server/php"
 						
-						ln -s "/var/lib/docker/volumes/ojs-$(echo $ojsNum)_plugins/_data" "development/versions/$ojsNum/$os/$server/php/volumes/plugins"
+						ln -s "/var/lib/docker/volumes/ojs-${ojsNum}_plugins/_data" "development/versions/$ojsNum/$os/$server/php/volumes/plugins"
 						
 						sudo chown 100:101 "development/versions/$ojsNum/$os/$server/$php/volumes" -Rf
 
